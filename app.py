@@ -47,9 +47,21 @@ def fib(n):
             a, b = b, a+b   
     return array
 
-@app.route("/is-prime/<int>")
-def prime():
-	return
+@app.route('/is-prime/<int:x>')
+def prime(x):
+    return jsonify(
+        input=x,
+        output=is_prime(x)
+        )
+def is_prime(n):
+   if n > 1:
+       for i in range(2, n):
+           if (n % i == 0):
+               return False      
+           else:
+              return True
+   else:
+       return False
 
 @app.route("/slack-alert/<string>")
 def slackAlert():
