@@ -2,7 +2,7 @@
 ##REST API
 ## app.py
 
-from flask import Flask
+from flask import Flask, jsonify
 import hashlib
 app = Flask(__name__)
 
@@ -30,9 +30,22 @@ def fact(num):
 		return(str(factorial))
     
 
-@app.route("/fibonacci/<int>")
-def fib():
-    return
+@app.route('/fibonacci/<int(signed=True):x>')
+def fibo(x):
+    return jsonify(
+        input = x,
+        output = fib(x)
+        )
+def fib(n):
+    if n < 0 :
+        print ("Error, input needs to be positive.")   
+    else:
+        a, b = 0, 1
+        array = [0]
+        while b <= n:
+            array.append(b)
+            a, b = b, a+b   
+    return array
 
 @app.route("/is-prime/<int>")
 def prime():
