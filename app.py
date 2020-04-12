@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def howdy():
-    return "<h1>Hello World</h1>"
+    return "<h1>Howdy and welcome to our container application!</h1>"
 
 @app.route("/md5/<string>")
 def md5(string):
