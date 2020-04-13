@@ -16,20 +16,28 @@ def howdy():
 def md5(string):
 	hash_object = hashlib.md5(string.encode())
 	md5_hash = hash_object.hexdigest()
-	return jsonify(md5_hash)
+	return jsonify(
+		input = string,
+		output =md5_hash)
     
 @app.route("/factorial/<num>")
 def fact(num):
 	intnum = int(num)
 	factorial = 1
 	if intnum == 0:
-		return jsonify('Factorial of 0 is 1')
+		return jsonify(
+			input = num,
+			output = 'Factorial of 0 is 1')
 	if intnum < 0:
-		return jsonify('Error, please enter a positive integer')
+		return jsonify(
+			input = num,
+			output = 'Error, please enter a positive integer')
 	else:
 		for i in range(1,intnum + 1):
 			factorial = factorial*i
-		return jsonify(str(factorial))
+		return jsonify(
+			input = num,
+			output = str(factorial))
     
 
 @app.route('/fibonacci/<int(signed=True):x>')
