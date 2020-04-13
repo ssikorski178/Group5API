@@ -1,5 +1,13 @@
 # Group5API
-Repository for TCMG 412's team 5 API Project. 
+Repository for TCMG 412's team 5 API Project.
+
+##### /md5/<string> Function:
+
+##### Slack Alert function:
+
+##### Slack Alert function:
+
+##### Slack Alert function:
 
 ##### Slack Alert function:
 	(1) uses library: slackclient version 1.0.0 
