@@ -18,4 +18,4 @@ Repository for TCMG 412's team 5 API Project.
 ##### /slack-alert/string Endpoint:
 	(1) uses library: slackclient version 1.0.0 
 		Very important to use slackclient version 1.0.0, newer versions won't work this way.
-		`pip install slackclient==1.0.0`
+		pip install slackclient==1.0.0
