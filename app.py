@@ -27,7 +27,7 @@ def fact(num):
 	if intnum == 0:
 		return jsonify(
 			input = num,
-			output = 'Factorial of 0 is 1')
+			output = int(1))
 	if intnum < 0:
 		return jsonify(
 			input = num,
