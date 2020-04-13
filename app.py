@@ -5,6 +5,7 @@
 from flask import Flask, jsonify
 import hashlib
 from slackclient import SlackClient
+import math
 
 app = Flask(__name__)
 
@@ -64,14 +65,15 @@ def prime(x):
         output=is_prime(x)
         )
 def is_prime(n):
-   if n > 1:
-       for i in range(2, n):
-           if (n % i == 0):
-               return False      
-           else:
-              return True
-   else:
+   if n < 2 :
        return False
+   if n % 2 == 0 and n > 2: 
+        return False
+   for i in range(3, int(math.sqrt(n)) + 1, 2):
+       if n % i == 0:
+           return False
+   return True
+
 
 @app.route("/slack-alert/<string>")
 ##CHANNEL IDs:
