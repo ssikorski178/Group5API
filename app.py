@@ -4,6 +4,8 @@
 
 from flask import Flask, jsonify
 import hashlib
+from slackclient import SlackClient
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -64,8 +66,23 @@ def is_prime(n):
        return False
 
 @app.route("/slack-alert/<string>")
-def slackAlert():
-	return
+##CHANNEL IDs:
+### general - C2581UKGA
+### test -- C011CNT49QX
+def slackAlert(string):
+  slack_client = SlackClient('xoxp-73266387591-927352877555-1056905887138-37a978c388314c4742acf0b8649679df')
+  attempt_alert = slack_client.api_call("chat.postMessage",
+    channel='C011CNT49QX',
+    text=string,
+    username='Group5-slack-alert')
+
+  if attempt_alert.get('ok'):
+    return jsonify(input=string, output=True)
+  else:
+    return jsonify(input=string, output=False)
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=False,host='0.0.0.0')
