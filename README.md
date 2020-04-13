@@ -9,7 +9,7 @@ Repository for TCMG 412's team 5 API Project.
 
 
 
-##### /md5/<string> Endpoint:
+##### /md5/'<string>' Endpoint:
 
 ##### /factorial/<int> Endpoint:
 
