@@ -70,7 +70,7 @@ def is_prime(n):
 ### general - C2581UKGA
 ### test -- C011CNT49QX
 def slackAlert(string):
-  slack_client = SlackClient('xoxp-73266387591-927352877555-1056905887138-37a978c388314c4742acf0b8649679df')
+  slack_client = SlackClient('xoxb-73266387591-1057780958419-cmZK7xvCKYb5sblKCEnyci2n')
   attempt_alert = slack_client.api_call("chat.postMessage",
     channel='C011CNT49QX',
     text=string,
