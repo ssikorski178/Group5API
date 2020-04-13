@@ -36,8 +36,8 @@ def fact(num):
 		for i in range(1,intnum + 1):
 			factorial = factorial*i
 		return jsonify(
-			input = num,
-			output = str(factorial))
+			input = int(num),
+			output = int(factorial))
     
 
 @app.route('/fibonacci/<int(signed=True):x>')
