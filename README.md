@@ -20,4 +20,4 @@ Repository for TCMG 412's team 5 API Project.
 		Very important to use slackclient version 1.0.0, newer versions won't work this way.
 		pip install slackclient==1.0.0
 	(2) The function posts either in #general or in #spr20-group5-test channels:
- 		change which channel by switching out the ID
+ 		change which channel by switching out the ID found above the route's function.
