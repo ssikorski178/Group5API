@@ -21,24 +21,28 @@ def md5(string):
 		input = string,
 		output =md5_hash)
     
-@app.route("/factorial/<num>")
+@app.route("/factorial/<int:num>")
 def fact(num):
-	intnum = int(num)
 	factorial = 1
-	if intnum == 0:
-		return jsonify(
-			input = num,
-			output = int(1))
-	if intnum < 0:
-		return jsonify(
-			input = num,
-			output = 'Error, please enter a positive integer')
+	if isinstance(num, int) == True:
+		if num == 0:
+			return jsonify(
+				input = num,
+				output = int(1))
+		if num < 0:
+			return jsonify(
+				input = num,
+				output = 'Error, please enter a positive integer')
+		else:
+			for i in range(1,num + 1):
+				factorial = factorial*i
+			return jsonify(
+				input = int(num),
+				output = int(factorial))
 	else:
-		for i in range(1,intnum + 1):
-			factorial = factorial*i
 		return jsonify(
-			input = int(num),
-			output = int(factorial))
+				input = num,
+				output = 'Error, please enter an integer')
     
 
 @app.route('/fibonacci/<int(signed=True):x>')
