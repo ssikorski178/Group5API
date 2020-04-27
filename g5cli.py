@@ -36,13 +36,14 @@ prime_parser = subparsers.add_parser('is-prime', help='Returns a true or false')
 prime_parser.add_argument('prime_integer', action='store', help='Returns a true or false')
 
 #keyval HERE WE GO
-#keyval_parser = subparsers.add_parser('keyval', help='Use this to manipulate Redis Keys. Enter a key value then choose an option: -post, -get, -put, -delete')
-#keyval_parser.add_argument('keyval_parser', action='store', help='The Keyval thing')
-#keyval_parser.add_argument('-post', help='Use this to write a new key-value pair into the Redis database')
-#keyval_parser.add_argument('-get', help='Use this to retrieve the value associated with the key supplied in the URL')
-#keyval_parser.add_argument('-put', help='Use this to overwrite the value on an existing key')
-#keyval_parser.add_argument('-delete', help='Use this to key (and value) supplied')
-
+'''
+keyval_parser = subparsers.add_parser('keyval', help='Use this to manipulate Redis Keys. Enter a key value then choose an option: -post, -get, -put, -delete')
+keyval_parser.add_argument('keyval_parser', action='store', help='The Keyval thing')
+keyval_parser.add_argument('-post', help='Use this to write a new key-value pair into the Redis database')
+keyval_parser.add_argument('-get', help='Use this to retrieve the value associated with the key supplied in the URL')
+keyval_parser.add_argument('-put', help='Use this to overwrite the value on an existing key')
+keyval_parser.add_argument('-delete', help='Use this to key (and value) supplied')
+'''
 args = parser.parse_args()
 if args.cli == 'md5':
 	input_md5string = args.md5_string
@@ -63,21 +64,24 @@ if args.cli == 'is-prime':
 	input_primeint = args.prime_integer
 	r=requests.get('http://127.0.0.1:5000/is-prime/'+input_primeint)
 	print(r.text)
-	
-#if args.cli == 'keyval':
-	#if args.cli == '-post':
-	#input_keystr = args.keyval_parser
-	#r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
-	#print(r.text)
-	#if args.cli == '-get':
-	#input_keystr = args.keyval_parser
-	#r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
-	#if args.cli == 'put':
-	#input_keystr = args.keyval_parser
-	#r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
-	#if args.cli == '-delete':
-	#input_keystr = args.keyval_parser
-	#r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+'''	
+if args.cli == 'keyval':
+	if args.cli == '-post':
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+	print(r.text)
+	if args.cli == '-get':
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+	if args.cli == 'put':
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+	if args.cli == '-delete':
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+	else:
+	print('Please specify a Redis command')
+	'''
 	
 
 
