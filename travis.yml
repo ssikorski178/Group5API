@@ -1,0 +1,15 @@
+language: python
+​
+services:
+    - docker
+​
+before_install:
+    - cd api-tester
+    - docker build -t andem/tcmg412-tester .
+    - cd ../GROUP5API
+    - docker build -t GROUP5API/dockerflaskapp .
+    - docker-compose up -d
+    - docker ps
+​
+script:
+    - docker run andem/tcmg412-tester
