@@ -1,8 +1,21 @@
 import argparse
 import http
 import requests
+import textwrap
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser( 
+	formatter_class=argparse.RawDescriptionHelpFormatter,
+		description=textwrap.dedent('''\
+			Group 5 API Tool Commands:
+			---------------------------
+				md5 - usage: md5 somestring
+				factorial - usage: factorial somenum
+				fibonacci - usage: fibonacci somenum
+				is-prime - usage: is-prime somenum
+				kyeval - uage: keyval -Redis_option somestring
+			'''))
+			
+parser.print_help()
 
 subparsers = parser.add_subparsers(help='commands', dest='cli')
 
