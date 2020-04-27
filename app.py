@@ -2,12 +2,15 @@
 ##REST API
 ## app.py
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, requests
 import hashlib
 from slackclient import SlackClient
 import math
+import os
+from redis imports Redis, RedisError
 
 app = Flask(__name__)
+redis = Redis(host="redis", socket_connect_timeout=2, socket_timeout=2)
 
 @app.route("/")
 def howdy():
@@ -95,6 +98,74 @@ def slackAlert(string):
   else:
     return jsonify(input=string, output=False)
 
+
+@app.route('/keyval', methods=['POST', 'PUT'])
+def key_value():
+   
+    json_value = {
+        'key': None,
+        'value': None,
+        'command': 'CREATE' if request.method=='POST' else 'UPDATE',
+        'result': False,
+        'error': None
+    }
+
+    try:
+        test_value = redis.get(json_value['key'])
+    except RedisError:
+        json_value['error'] = "Unable to connect to redis."
+        return jsonify(json_value), 400
+
+    if request.method == 'POST' and not test_value == None:
+        json_value['error'] = "Unable to create new record becausse key already exists."
+        return jsonify(json_value), 409
+
+    elif request.method == 'PUT' and test_value == None:
+        json_value['error'] = "Unable to update record because key does not exist."
+        return jsonify(json_value), 404
+
+    elif redis.set(json_value['key'], json_value['value']) == False:
+        json_value['error'] = "There was a problem creating the value in Redis."
+        return jsonify(json_value), 400
+    else:
+        json_value['result'] = True
+        return jsonify(json_value), 200
+
+
+@app.route('/keyval/<string:key>', methods=['GET', 'DELETE'])
+def key_value_retrieve(key):
+    json_value = {
+        'key': key,
+        'value': None,
+        'command': "{} {}".format('RETRIEVE' if request.method=='GET' else 'DELETE', key),
+        'result': False,
+        'error': None
+    }
+
+    try:
+        test_value = redis.get(key)
+    except RedisError:
+        json_value['error'] = "Unable to connect to redis."
+        return jsonify(json_value), 400
+
+    if test_value == None:
+        json_value['error'] = "Key does not exist."
+        return jsonify(json_value), 404
+    else:
+        json_value['value'] = test_value
+
+    if request.method == 'GET':
+        json_value['result'] = True
+        return jsonify(json_value), 200
+
+    elif request.method == 'DELETE':
+        ret = redis.delete(key)
+        if ret == 1:
+            json_value['result'] = True
+            return jsonify(json_value)
+        else:
+            json_value['error'] = f"Unable to delete key (expected return value 1; client returned {ret})"
+            return jsonify(json_value), 400
 
 
 
