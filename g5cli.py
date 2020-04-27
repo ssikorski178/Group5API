@@ -23,7 +23,7 @@ prime_parser = subparsers.add_parser('is-prime', help='Returns a true or false')
 prime_parser.add_argument('prime_integer', action='store', help='Returns a true or false')
 
 #keyval HERE WE GO
-keyval_parser = subparsers.add_parser('keyval', help='Use this to manipulate Redis Keys. Args: -post, -get, -put, -delete')
+keyval_parser = subparsers.add_parser('keyval', help='Use this to manipulate Redis Keys. Enter a key value then choose an option: -post, -get, -put, -delete')
 keyval_parser.add_argument('keyval_parser', action='store', help='The Keyval thing')
 keyval_parser.add_argument('-post', help='Use this to write a new key-value pair into the Redis database')
 keyval_parser.add_argument('-get', help='Use this to retrieve the value associated with the key supplied in the URL')
@@ -53,13 +53,18 @@ if args.cli == 'is-prime':
 	
 if args.cli == 'keyval':
 	if args.cli == '-post':
-	
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
+	print(r.text)
 	if args.cli == '-get':
-	
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
 	if args.cli == 'put':
-	
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
 	if args.cli == '-delete':
-	
+	input_keystr = args.keyval_parser
+	r=requests.get('http://127.0.0.1:5000/keyval/'+input_keystr)
 	
 
 
