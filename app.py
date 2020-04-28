@@ -2,15 +2,22 @@
 ##REST API
 ## app.py
 
-from flask import Flask, jsonify, requests
+from flask import Flask, jsonify, request
 import hashlib
 from slackclient import SlackClient
 import math
+import requests
 import os
-from redis imports Redis, RedisError
+from redis import Redis, RedisError
+import redis
 
 app = Flask(__name__)
-redis = Redis(host="redis", socket_connect_timeout=2, socket_timeout=2)
+r = redis.Redis(host='redis', port=6379, db=0)
+
+r.set('foo', 'bar')
+
+
+print(r.get('foo'))
 
 @app.route("/")
 def howdy():
@@ -111,7 +118,7 @@ def key_value():
     }
 
     try:
-        test_value = redis.get(json_value['key'])
+        test_value = r.get(json_value['key'])
     except RedisError:
         json_value['error'] = "Unable to connect to redis."
         return jsonify(json_value), 400
@@ -124,7 +131,7 @@ def key_value():
         json_value['error'] = "Unable to update record because key does not exist."
         return jsonify(json_value), 404
 
-    elif redis.set(json_value['key'], json_value['value']) == False:
+    elif r.set(json_value['key'], json_value['value']) == False:
         json_value['error'] = "There was a problem creating the value in Redis."
         return jsonify(json_value), 400
     else:
@@ -143,7 +150,7 @@ def key_value_retrieve(key):
     }
 
     try:
-        test_value = redis.get(key)
+        test_value = r.get(key)
     except RedisError:
         json_value['error'] = "Unable to connect to redis."
         return jsonify(json_value), 400
@@ -159,12 +166,12 @@ def key_value_retrieve(key):
         return jsonify(json_value), 200
 
     elif request.method == 'DELETE':
-        ret = redis.delete(key)
+        ret = r.delete(key)
         if ret == 1:
             json_value['result'] = True
             return jsonify(json_value)
         else:
-            json_value['error'] = f"Unable to delete key (expected return value 1; client returned {ret})"
+            json_value['error'] = "Unable to delete key (expected return value 1; client returned {ret})"
             return jsonify(json_value), 400
 
 

@@ -2,13 +2,15 @@
 version: "3.4"
 services:
   web:
-    image: andem/tcmg412-api
+    image: drdgz/flaskapp-15:latest
     ports:
       - "5000:5000"
     networks:
       - webnet
   redis:
     image: redis
+    ports:
+      - "6379:6379"
     networks:
       - webnet
 networks:
